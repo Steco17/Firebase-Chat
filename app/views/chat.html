@@ -1,0 +1,28 @@
+<div class="main-container">
+    <div class="example-chat" id ="l-demo-container">
+        <header>Lets Chat - Firebase chat demo</header>
+    
+        <ul id="example-messages" class="example-chat-messages" scroll-bottom="messages">   
+            <li ng-repeat="msg in messages">
+                <small style="color:blue; font-size:12px">({{msg.date}})</small>
+              <strong class="example-chat-username">{{ msg.from }} : </strong>
+                       {{ msg.body }}
+            </li>
+        </ul>
+    
+        <footer>
+            <input ng-model="msg" ng-keydown="addMessage($event)" type="text"  placeholder="Type a message...">
+        </footer>
+    </div>
+
+    <div class="example-chat" id="status-demo-container" >
+        <header>Who is here?</header>
+        <ul scroll-bottom="chatstatus">
+            <li ng-repeat="log in chatstatus">
+                <div ng-class="{ 'joined' : log.status.match('joined'), 'left' : log.status.match('left') }">{{ log.status }}</div>
+            </li>
+        </ul>
+
+    </div>
+    <div id="clear"></div>
+</div>

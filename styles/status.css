@@ -1,0 +1,8 @@
+.joined {
+    font: bold 16px sans-serif;
+    color: limegreen;
+}
+.left {
+    font: italic bold 12px sans-serif;
+    color:red;
+}
