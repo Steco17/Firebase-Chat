@@ -5,6 +5,7 @@
         $scope.getUsername = $routeParams.username;
         
         $scope.sendplay = ngAudio.load("sounds/send.mp3");
+        $scope.receivedplay = ngAudio.load("sounds/receive.mp3")
         $scope.leftplay = ngAudio.load("sounds/left.mp3");
         $scope.joinedplay = ngAudio.load("sounds/join.mp3")
         
@@ -12,6 +13,7 @@
         var ref = new Firebase("https://firstappbind.firebaseio.com/messages");
         
         var statusref = new Firebase("https://firstappbind.firebaseio.com/chatstatus");
+    
 
           // GET MESSAGES AS AN ARRAY
           $scope.messages = $firebaseArray(ref);
@@ -44,7 +46,7 @@
     
           };
         
-        
+        //Room status notification
         statusref.on('child_added', function(childSnapshot, prevChildKey) {
                 var postsData = null;
                 postsData = childSnapshot.val();
@@ -61,6 +63,20 @@
              }
         }
         
+        //Message receive notification
+        ref.on('child_added', function(childSnapshot, prevChildKey) {
+                var messagesData = null;
+                messagesData = childSnapshot.val();
+                newMessage(messagesData);
+        });
+        
+        function newMessage(messagesData) {
+            
+                if(!(messagesData.from === $scope.getUsername)){
+                $scope.receivedplay.play();
+            }
+        }
+        
          $scope.onExit = function() {
             $scope.chatstatus.$add({
                 status: $scope.getUsername + ' left'    
@@ -68,6 +84,8 @@
         };
         
         $window.onbeforeunload =  $scope.onExit;
+        
+        
         
         var update = function (){
             $scope.chatstatus.$add({
